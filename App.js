@@ -1,20 +1,167 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import {
+  Alert,
+  Button,
+  FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from "react-native";
+// import { img } from "./assets/icon.png";
+import { useFonts } from "expo-font";
+import { useState } from "react";
+
+const COURSES = [
+  {
+    id: "45k6-j54k-4jth1",
+    title: "HTML",
+  },
+  {
+    id: "4116-jfk5-43rh2",
+    title: "JavaScript",
+  },
+  {
+    id: "4d16-5tt5-4j553",
+    title: "React",
+  },
+  {
+    id: "LG16-ant5-0J254",
+    title: "React Native",
+  },
+  {
+    id: "45k6-j54k-4jth5",
+    title: "HTML",
+  },
+  {
+    id: "4116-jfk5-43rh6",
+    title: "JavaScript",
+  },
+  {
+    id: "4d16-5tt5-4j557",
+    title: "React",
+  },
+  {
+    id: "LG16-ant5-0J258",
+    title: "React Native",
+  },
+  {
+    id: "45k6-j54k-4jth9",
+    title: "HTML",
+  },
+  {
+    id: "4116-jfk5-43rh10",
+    title: "JavaScript",
+  },
+  {
+    id: "4d16-5tt5-4j5511",
+    title: "React",
+  },
+  {
+    id: "LG16-ant5-0J2512",
+    title: "React Native",
+  },
+  {
+    id: "45k6-j54k-4jth13",
+    title: "HTML",
+  },
+];
+
+// export default function App() {
+//   const [courses, setCourses] = useState(COURSES);
+
+//   const [fontsLoaded] = useFonts({
+//     "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
+//   });
+
+//   if (!fontsLoaded) {
+//     return null;
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       {/* <ScrollView>
+//         {courses.map((course) => (
+//           <Text key={course.id}>{course.title}</Text>
+//         ))}
+//       </ScrollView> */}
+//       <FlatList
+//         data={courses}
+//         renderItem={({ item }) => (
+//           <Text
+//             onPress={() => console.log("Text pressed")}
+//             style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}
+//           >
+//             {item.title}
+//           </Text>
+//         )}
+//         keyExtractor={(item) => item.id}
+//       />
+//     </SafeAreaView>
+//   );
+// }
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
+  });
+
+  const handleButton1 = () =>
+    Alert.alert("test1", "Main message", [
+      { text: "yes", onPress: () => console.log("yes button") },
+      { text: "no", onPress: () => console.log("no button") },
+    ]);
+
+  const handleButton2 = () =>
+    Alert.prompt("test1", "Main message", (text) => console.log(text));
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}>
+        Hello World!!!!!!!!!!
+      </Text>
+
+      <Button title={"Click me"} onPress={handleButton1} />
+      <Button title={"Buttton 2"} onPress={handleButton2} />
+
+      <TouchableWithoutFeedback onPress={handleButton1}>
+        <Image
+          source={require("./assets/favicon.png")}
+          style={{ width: 50, height: 50 }}
+        />
+      </TouchableWithoutFeedback>
+
+      <View style={styles.box}>
+        <Text>Hello World!!!!!!!!!!</Text>
+      </View>
+
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+
+  box: {
+    backgroundColor: "yellow",
+    width: "50%",
+    height: 150,
+    opacity: 0.5,
+    borderWidth: "2",
+    borderColor: "red",
   },
 });
