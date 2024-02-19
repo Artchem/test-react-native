@@ -11,6 +11,7 @@ import {
   View,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 // import { img } from "./assets/icon.png";
 import { useFonts } from "expo-font";
@@ -123,45 +124,126 @@ export default function App() {
     return null;
   }
 
+  if (Platform.OS === "ios") {
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}>
-        Hello World!!!!!!!!!!
-      </Text>
-
-      <Button title={"Click me"} onPress={handleButton1} />
-      <Button title={"Buttton 2"} onPress={handleButton2} />
-
-      <TouchableWithoutFeedback onPress={handleButton1}>
-        <Image
-          source={require("./assets/favicon.png")}
-          style={{ width: 50, height: 50 }}
-        />
-      </TouchableWithoutFeedback>
-
-      <View style={styles.box}>
-        <Text>Hello World!!!!!!!!!!</Text>
-      </View>
-
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.mainBlock}>
+      <View style={[styles.box, { backgroundColor: "blue" }]}></View>
+      <View
+        style={[
+          styles.box,
+          { backgroundColor: "red", height: 150, alignSelf: "flex-start" },
+        ]}
+      ></View>
+      <View style={[styles.box, { backgroundColor: "green" }]}></View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainBlock: {
     flex: 1,
-    backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // backgroundColor: "yellow",
   },
-
   box: {
-    backgroundColor: "yellow",
-    width: "50%",
-    height: 150,
-    opacity: 0.5,
-    borderWidth: "2",
-    borderColor: "red",
+    // flex: 1,
+    width: 100,
+    height: 100,
   },
 });
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//////////   Flex          /////////////////////
+
+//  return (
+//    <SafeAreaView style={styles.mainBlock}>
+//      <View style={[styles.box, { backgroundColor: "blue" }]}></View>
+//      <View
+//        style={[
+//          styles.box,
+//          { backgroundColor: "red", height: 150, alignSelf: "flex-start" },
+//        ]}
+//      ></View>
+//      <View style={[styles.box, { backgroundColor: "green" }]}></View>
+//    </SafeAreaView>
+//  );
+
+// const styles = StyleSheet.create({
+//   mainBlock: {
+//     flex: 1,
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     // backgroundColor: "yellow",
+//   },
+//   box: {
+//     // flex: 1,
+//     width: 100,
+//     height: 100,
+//   },
+// });
+
+////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////   Базовые
+// return (
+//     <SafeAreaView style={styles.container}>
+//       <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}>
+//         Hello World!!!!!!!!!!
+//       </Text>
+
+//       <Button title={"Click me"} onPress={handleButton1} />
+//       <Button title={"Buttton 2"} onPress={handleButton2} />
+
+//       <TouchableWithoutFeedback onPress={handleButton1}>
+//         <Image
+//           // blurRadius={7}
+//           source={require("./assets/favicon.png")}
+//           // source={{
+//           //   width: 200,
+//           //   height: 150,
+//           //   uri: "https://i.pinimg.com/236x/0e/bd/26/0ebd262c4b7f69f7ec915dbd8509328f.jpg",
+//           // }}
+//           style={{ width: 50, height: 50 }}
+//         />
+//       </TouchableWithoutFeedback>
+
+//       <View style={styles.box}>
+//         <Text>Hello World!!!!!!!!!!</Text>
+//       </View>
+
+//       <StatusBar style="auto" />
+//     </SafeAreaView>
+//   );
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     // alignItems: "center",
+//     // justifyContent: "center",
+//   },
+
+//   box: {
+//     backgroundColor: "yellow",
+//     width: "50%",
+//     height: 150,
+//     opacity: 0.5,
+//     borderWidth: "2",
+//     borderColor: "red",
+//     borderStyle: "dotted",
+
+//     // position: "absolute",
+//     // top: 250,
+//     // left: 50,
+
+//     position: "absolute",
+//     top: Platform.OS === "ios" ? 250 : 30,
+//     left: 50,
+//   },
+// });
