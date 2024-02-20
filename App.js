@@ -1,152 +1,76 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  Alert,
-  Button,
-  FlatList,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  Platform,
-} from "react-native";
+// import { StatusBar } from "expo-status-bar";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 // import { img } from "./assets/icon.png";
 import { useFonts } from "expo-font";
 import { useState } from "react";
-
-const COURSES = [
-  {
-    id: "45k6-j54k-4jth1",
-    title: "HTML",
-  },
-  {
-    id: "4116-jfk5-43rh2",
-    title: "JavaScript",
-  },
-  {
-    id: "4d16-5tt5-4j553",
-    title: "React",
-  },
-  {
-    id: "LG16-ant5-0J254",
-    title: "React Native",
-  },
-  {
-    id: "45k6-j54k-4jth5",
-    title: "HTML",
-  },
-  {
-    id: "4116-jfk5-43rh6",
-    title: "JavaScript",
-  },
-  {
-    id: "4d16-5tt5-4j557",
-    title: "React",
-  },
-  {
-    id: "LG16-ant5-0J258",
-    title: "React Native",
-  },
-  {
-    id: "45k6-j54k-4jth9",
-    title: "HTML",
-  },
-  {
-    id: "4116-jfk5-43rh10",
-    title: "JavaScript",
-  },
-  {
-    id: "4d16-5tt5-4j5511",
-    title: "React",
-  },
-  {
-    id: "LG16-ant5-0J2512",
-    title: "React Native",
-  },
-  {
-    id: "45k6-j54k-4jth13",
-    title: "HTML",
-  },
-];
-
-// export default function App() {
-//   const [courses, setCourses] = useState(COURSES);
-
-//   const [fontsLoaded] = useFonts({
-//     "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
-//   });
-
-//   if (!fontsLoaded) {
-//     return null;
-//   }
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       {/* <ScrollView>
-//         {courses.map((course) => (
-//           <Text key={course.id}>{course.title}</Text>
-//         ))}
-//       </ScrollView> */}
-//       <FlatList
-//         data={courses}
-//         renderItem={({ item }) => (
-//           <Text
-//             onPress={() => console.log("Text pressed")}
-//             style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}
-//           >
-//             {item.title}
-//           </Text>
-//         )}
-//         keyExtractor={(item) => item.id}
-//       />
-//     </SafeAreaView>
-//   );
-// }
+import Header from "./components/Header/Header";
+import ListItem from "./components/List/ListItem";
+import Form from "./components/Form/Form";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
   });
 
-  const handleButton1 = () =>
-    Alert.alert("test1", "Main message", [
-      { text: "yes", onPress: () => console.log("yes button") },
-      { text: "no", onPress: () => console.log("no button") },
-    ]);
+  const [listOfItems, setListOfItems] = useState([
+    { text: "Buy milk", key: 1 },
+    { text: "Wash car", key: 2 },
+    { text: "Buy potatos", key: 3 },
+    { text: "Walk dog", key: 4 },
+  ]);
 
-  const handleButton2 = () =>
-    Alert.prompt("test1", "Main message", (text) => console.log(text));
+  // const handleButton1 = () =>
+  //   Alert.alert("test1", "Main message", [
+  //     { text: "yes", onPress: () => console.log("yes button") },
+  //     { text: "no", onPress: () => console.log("no button") },
+  //   ]);
+
+  // const handleButton2 = () =>
+  //   Alert.prompt("test1", "Main message", (text) => console.log(text));
 
   if (!fontsLoaded) {
     return null;
   }
 
-  if (Platform.OS === "ios") {
-  }
+  // if (Platform.OS === "ios") {
+  // }
+  const addTask = (textNew) => {
+    setListOfItems((list) => {
+      return [
+        { text: textNew, key: Math.random().toString(36).substring(7) },
+        ...list,
+      ];
+    });
+  };
+
+  const deleteTask = (key) => {
+    setListOfItems((list) => {
+      return list.filter((listOfItems) => listOfItems.key !== key);
+    });
+  };
 
   return (
-    <SafeAreaView style={styles.mainBlock}>
-      <View style={[styles.box, { backgroundColor: "blue" }]}></View>
-      <View
-        style={[
-          styles.box,
-          { backgroundColor: "red", height: 150, alignSelf: "flex-start" },
-        ]}
-      ></View>
-      <View style={[styles.box, { backgroundColor: "green" }]}></View>
-    </SafeAreaView>
+    <View style={styles.mainBlock}>
+      <Header />
+      <Form addTask={addTask} />
+      <View>
+        <FlatList
+          data={listOfItems}
+          renderItem={({ item }) => (
+            <ListItem el={item} deleteTask={deleteTask} />
+          )}
+        />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   mainBlock: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    // flex: 1,
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    // alignItems: "center",
     // backgroundColor: "yellow",
   },
   box: {
@@ -247,3 +171,94 @@ const styles = StyleSheet.create({
 //     left: 50,
 //   },
 // });
+
+////////////////////////////////////////////////////////////////////////////////////
+
+// const COURSES = [
+//   {
+//     id: "45k6-j54k-4jth1",
+//     title: "HTML",
+//   },
+//   {
+//     id: "4116-jfk5-43rh2",
+//     title: "JavaScript",
+//   },
+//   {
+//     id: "4d16-5tt5-4j553",
+//     title: "React",
+//   },
+//   {
+//     id: "LG16-ant5-0J254",
+//     title: "React Native",
+//   },
+//   {
+//     id: "45k6-j54k-4jth5",
+//     title: "HTML",
+//   },
+//   {
+//     id: "4116-jfk5-43rh6",
+//     title: "JavaScript",
+//   },
+//   {
+//     id: "4d16-5tt5-4j557",
+//     title: "React",
+//   },
+//   {
+//     id: "LG16-ant5-0J258",
+//     title: "React Native",
+//   },
+//   {
+//     id: "45k6-j54k-4jth9",
+//     title: "HTML",
+//   },
+//   {
+//     id: "4116-jfk5-43rh10",
+//     title: "JavaScript",
+//   },
+//   {
+//     id: "4d16-5tt5-4j5511",
+//     title: "React",
+//   },
+//   {
+//     id: "LG16-ant5-0J2512",
+//     title: "React Native",
+//   },
+//   {
+//     id: "45k6-j54k-4jth13",
+//     title: "HTML",
+//   },
+// ];
+
+// export default function App() {
+//   const [courses, setCourses] = useState(COURSES);
+
+//   const [fontsLoaded] = useFonts({
+//     "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
+//   });
+
+//   if (!fontsLoaded) {
+//     return null;
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       {/* <ScrollView>
+//         {courses.map((course) => (
+//           <Text key={course.id}>{course.title}</Text>
+//         ))}
+//       </ScrollView> */}
+//       <FlatList
+//         data={courses}
+//         renderItem={({ item }) => (
+//           <Text
+//             onPress={() => console.log("Text pressed")}
+//             style={{ fontFamily: "Montserrat-Medium", fontSize: 28 }}
+//           >
+//             {item.title}
+//           </Text>
+//         )}
+//         keyExtractor={(item) => item.id}
+//       />
+//     </SafeAreaView>
+//   );
+// }
