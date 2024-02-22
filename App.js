@@ -1,88 +1,153 @@
-// import { StatusBar } from "expo-status-bar";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
-// import { img } from "./assets/icon.png";
-import { useFonts } from "expo-font";
-import { useState } from "react";
-import Header from "./components/Header/Header";
-import ListItem from "./components/List/ListItem";
-import Form from "./components/Form/Form";
+import "react-native-gesture-handler";
+import { StyleSheet, View } from "react-native";
+import * as Font from "expo-font";
+import { useCallback, useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import Main from "./components/Main";
+import Navigate from "./components/navigate";
+
+// import { useState } from "react";
+
+SplashScreen.preventAutoHideAsync();
+// const fonts = () =>
+//   Font.loadAsync({
+//     "mt-bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+//     "mt-light": require("./assets/fonts/Montserrat-Light.ttf"),
+//   });
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
-  });
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  const [listOfItems, setListOfItems] = useState([
-    { text: "Buy milk", key: 1 },
-    { text: "Wash car", key: 2 },
-    { text: "Buy potatos", key: 3 },
-    { text: "Walk dog", key: 4 },
-  ]);
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          "mt-bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+          "mt-light": require("./assets/fonts/Montserrat-Light.ttf"),
+        });
+      } catch (error) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
 
-  // const handleButton1 = () =>
-  //   Alert.alert("test1", "Main message", [
-  //     { text: "yes", onPress: () => console.log("yes button") },
-  //     { text: "no", onPress: () => console.log("no button") },
-  //   ]);
+  const onLayout = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
 
-  // const handleButton2 = () =>
-  //   Alert.prompt("test1", "Main message", (text) => console.log(text));
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  // if (Platform.OS === "ios") {
-  // }
-  const addTask = (textNew) => {
-    setListOfItems((list) => {
-      return [
-        { text: textNew, key: Math.random().toString(36).substring(7) },
-        ...list,
-      ];
-    });
-  };
-
-  const deleteTask = (key) => {
-    setListOfItems((list) => {
-      return list.filter((listOfItems) => listOfItems.key !== key);
-    });
-  };
+  if (!appIsReady) return null;
 
   return (
-    <View style={styles.mainBlock}>
-      <Header />
-      <Form addTask={addTask} />
-      <View>
-        <FlatList
-          data={listOfItems}
-          renderItem={({ item }) => (
-            <ListItem el={item} deleteTask={deleteTask} />
-          )}
-        />
-      </View>
+    <View style={styles.mainBlock} onLayout={onLayout}>
+      <Navigate />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   mainBlock: {
-    // flex: 1,
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // alignItems: "center",
-    // backgroundColor: "yellow",
-  },
-  box: {
-    // flex: 1,
-    width: 100,
-    height: 100,
+    flex: 1,
+    backgroundColor: "yellow",
   },
 });
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////  Todo
+
+// // import { StatusBar } from "expo-status-bar";
+// import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+// // import { img } from "./assets/icon.png";
+// import { useFonts } from "expo-font";
+// import { useState } from "react";
+// import Header from "./components/Header/Header";
+// import ListItem from "./components/List/ListItem";
+// import Form from "./components/Form/Form";
+
+// export default function App() {
+//   const [fontsLoaded] = useFonts({
+//     "Montserrat-Medium": require("./assets/fonts/Montserrat-Regular.ttf"),
+//   });
+
+//   const [listOfItems, setListOfItems] = useState([
+//     { text: "Buy milk", key: 1 },
+//     { text: "Wash car", key: 2 },
+//     { text: "Buy potatos", key: 3 },
+//     { text: "Walk dog", key: 4 },
+//   ]);
+
+//   if (!fontsLoaded) {
+//     return null;
+//   }
+
+//   // if (Platform.OS === "ios") {
+//   // }
+//   const addTask = (textNew) => {
+//     setListOfItems((list) => {
+//       return [
+//         { text: textNew, key: Math.random().toString(36).substring(7) },
+//         ...list,
+//       ];
+//     });
+//   };
+
+//   const deleteTask = (key) => {
+//     setListOfItems((list) => {
+//       return list.filter((listOfItems) => listOfItems.key !== key);
+//     });
+//   };
+
+//   return (
+//     <View style={styles.mainBlock}>
+//       <Header />
+//       <Form addTask={addTask} />
+//       <View>
+//         <FlatList
+//           data={listOfItems}
+//           renderItem={({ item }) => (
+//             <ListItem el={item} deleteTask={deleteTask} />
+//           )}
+//         />
+//       </View>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   mainBlock: {
+//     // flex: 1,
+//     // flexDirection: "row",
+//     // justifyContent: "space-between",
+//     // alignItems: "center",
+//     // backgroundColor: "yellow",
+//   },
+//   box: {
+//     // flex: 1,
+//     width: 100,
+//     height: 100,
+//   },
+// });
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 //////////   Flex          /////////////////////
+
+// const handleButton1 = () =>
+//   Alert.alert("test1", "Main message", [
+//     { text: "yes", onPress: () => console.log("yes button") },
+//     { text: "no", onPress: () => console.log("no button") },
+//   ]);
+
+// const handleButton2 = () =>
+//   Alert.prompt("test1", "Main message", (text) => console.log(text));
+
+// if (Platform.OS === "ios") {
+// }
 
 //  return (
 //    <SafeAreaView style={styles.mainBlock}>
