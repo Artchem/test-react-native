@@ -52,7 +52,7 @@ export default function App() {
 const styles = StyleSheet.create({
   mainBlock: {
     flex: 1,
-    backgroundColor: "yellow",
+    // backgroundColor: "yellow",
   },
 });
 
